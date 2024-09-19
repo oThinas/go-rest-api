@@ -1,19 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"go-rest-api/routes"
 	"net/http"
 )
 
 func main() {
-	HandleRequest()
+	routes.HandleRequest()
 	http.ListenAndServe(":8080", nil)
-}
-
-func HandleRequest() {
-	http.HandleFunc("/", Home)
-}
-
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Home page")
 }
