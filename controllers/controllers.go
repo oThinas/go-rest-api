@@ -3,9 +3,9 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"go-rest-api/database"
 	"go-rest-api/models"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -15,20 +15,16 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllPersonalities(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalities)
+	var personalities []models.Personality
+	database.DB.Find(&personalities)
+	json.NewEncoder(w).Encode(personalities)
 }
 
 func GetPersonalityById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		http.Error(w, "Invalid ID", http.StatusBadRequest)
-		return
-	}
+	id := vars["id"]
 
-	for _, personality := range models.Personalities {
-		if personality.Id == id {
-			json.NewEncoder(w).Encode(personality)
-		}
-	}
+	var personality models.Personality
+	database.DB.First(&personality, id)
+	json.NewEncoder(w).Encode(personality)
 }
