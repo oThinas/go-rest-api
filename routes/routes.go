@@ -12,8 +12,9 @@ func HandleRequest() *mux.Router {
 
 	r.HandleFunc("/api/personalities", controllers.GetAllPersonalities).Methods("GET")
 	r.HandleFunc("/api/personalities/{id}", controllers.GetPersonalityById).Methods("GET")
-
 	r.HandleFunc("/api/personalities", controllers.CreatePersonality).Methods("POST")
+	r.HandleFunc("/api/personalities/{id}", controllers.DeletePersonality).Methods("DELETE")
+	r.HandleFunc("/api/personalities/{id}", controllers.UpdatePersonality).Methods("PUT")
 
 	return r
 }
