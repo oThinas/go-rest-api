@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	routes.HandleRequest()
-	http.ListenAndServe(":8080", nil)
+	r := routes.HandleRequest()
+	http.ListenAndServe(":8080", r)
 }
